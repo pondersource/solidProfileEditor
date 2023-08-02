@@ -3,6 +3,7 @@ import { FC } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import AppThemeProvider from "./AppProviders/AppThemeProvider";
+import { SessionProvider } from "@inrupt/solid-ui-react";
 
 type IProps = {
   children: React.ReactElement;
@@ -10,14 +11,16 @@ type IProps = {
 
 const AppProviders: FC<IProps> = ({ children }) => {
   return (
-    <RecoilRoot>
-      <BrowserRouter>
-        <AppThemeProvider>
-          <CssBaseline />
-          {children}
-        </AppThemeProvider>
-      </BrowserRouter>
-    </RecoilRoot>
+    <SessionProvider>
+      <RecoilRoot>
+        <BrowserRouter>
+          <AppThemeProvider>
+            <CssBaseline />
+            {children}
+          </AppThemeProvider>
+        </BrowserRouter>
+      </RecoilRoot>
+    </SessionProvider>
   );
 };
 

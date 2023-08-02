@@ -3,24 +3,25 @@ import { useColorMode } from "../atoms/colorMode.atom";
 import { createTheme } from "@mui/material";
 import { red } from '@mui/material/colors';
 
+// generate a black and white maerial ui theme palette 
+
 export const useAppTheme = () => {
-      //   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
     const { colorMode } = useColorMode();
     const theme = useMemo(
         () =>
             createTheme({
                 palette: {
                     mode: colorMode,
-                    //   mode: prefersDarkMode ? "dark" : "light",
-                    primary: {
-                        main: '#556cd6',
-                    },
-                    secondary: {
-                        main: '#19857b',
-                    },
-                    error: {
-                        main: red.A400,
-                    },
+                    // primary: {
+                    //     // main: colorMode === "light" ?"":"",
+                    //     main: '#477d8d',
+                    // },
+                    // secondary: {
+                    //     main: '#fff',
+                    // },
+                    // error: {
+                    //     main: red.A400,
+                    // },
                 },
             }),
         [colorMode]

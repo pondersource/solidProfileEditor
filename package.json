@@ -12,9 +12,12 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@inrupt/lit-generated-vocab-common": "^0.3.11",
+    "@inrupt/solid-ui-react": "^2.8.2",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.2",
     "@mui/styled-engine-sc": "^5.12.0",
+    "@solid/lit-term": "^0.4.1",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
@@ -25,6 +28,7 @@
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
+    "@types/node": "^20.4.5",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",

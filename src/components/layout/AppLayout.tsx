@@ -1,13 +1,9 @@
-import { Outlet } from "react-router-dom";
 import Box from "@mui/material/Box";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import AppHeader from "./AppHeader";
 import { FC } from "react";
+import { Outlet } from "react-router-dom";
 import AppFooter from "./AppFooter";
+import AppHeader from "./AppHeader";
+import { alpha } from "@mui/material";
 
 type Props = {};
 
@@ -16,8 +12,18 @@ const AppLayout: FC<Props> = () => {
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <AppHeader />
       <Box
+        boxShadow="inherit"
         flex={1}
-        sx={{ justifyContent: "center", display: "flex", alignItems: "center" }}
+        sx={{
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+          //
+          bgcolor: alpha("#fff", 0.1),
+          flex: 1,
+          margin: 1,
+          borderRadius: 2,
+        }}
       >
         <Outlet />
       </Box>
