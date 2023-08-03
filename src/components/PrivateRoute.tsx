@@ -1,6 +1,6 @@
 import { useSession } from "@inrupt/solid-ui-react";
 import { FC } from "react";
-import { Navigate, Outlet, Route, RouteProps } from "react-router-dom";
+import { Navigate, Outlet, RouteProps } from "react-router-dom";
 
 export const PrivateRoute: FC<RouteProps> = (props) => {
   const {
@@ -13,6 +13,4 @@ export const PrivateRoute: FC<RouteProps> = (props) => {
   }
 
   return <Outlet />;
-
-  // return isLoggedIn ? <Route {...props} /> : <Navigate to="login" replace />;
 };

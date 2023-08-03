@@ -41,8 +41,8 @@ function App() {
       <Route element={<AppLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/callback" element={<LoginCallBack />} />
-        <Route path="/bookmarks" element={<BookmarksPage />} />
         <Route element={<PrivateRoute />}>
+          <Route path="/bookmarks" element={<BookmarksPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
