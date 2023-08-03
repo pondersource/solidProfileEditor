@@ -1,5 +1,10 @@
-import { useSession } from "@inrupt/solid-ui-react";
-import { FormControl, InputLabel, Select } from "@mui/material";
+import {
+  CombinedDataProvider,
+  Image,
+  Text,
+  useSession,
+} from "@inrupt/solid-ui-react";
+import { FormControl, InputLabel, Select, alpha } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -19,6 +24,12 @@ import AppLink from "../AppLink/AppLink";
 import { menuItems } from "../constants/menuItems";
 import { OIDC_PROVIDERS } from "../constants/oidcProviders";
 import AppLogo from "./AppLogo";
+import { Group } from "@mui/icons-material";
+import { nameProps } from "../constants/nameProps";
+import { VCARD } from "@inrupt/lit-generated-vocab-common";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { red } from "@mui/material/colors";
+import PersonIcon from "@mui/icons-material/Person";
 
 const settings = ["Profile", "Logout"];
 
@@ -30,16 +41,13 @@ const AppHeader: FC<IProps> = ({}) => {
       info: { isLoggedIn },
     },
   } = useSession();
-  // const [oidcIssuer, setOidcIssuer] = useState(() => OIDC_PROVIDERS[0].value);
-
-  // const navigate = useNavigate();
 
   const menus = useMemo(
     () =>
       isLoggedIn
         ? menuItems
         : menuItems.filter((x) => x.isPrivateRoute !== true),
-    []
+    [isLoggedIn]
   );
   return (
     <AppBar
@@ -62,18 +70,26 @@ const AppHeader: FC<IProps> = ({}) => {
             </Box>
             <Box
               flex={8}
-              sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}
+              sx={{
+                display: "flex",
+                // display: {
+                //   xs: "none",
+                //   sm: "flex",
+                // },
+                gap: 2,
+              }}
               justifyContent="center"
             >
-              {menus.map(({ title, url }) => (
+              {/* {menus.map(({ title, url }) => (
                 <AppLink key={url} href={url}>
                   {title}
                 </AppLink>
-              ))}
+              ))} */}
             </Box>
             <Box flex={2} display="flex" justifyContent="flex-end">
               {!isLoggedIn && <AppLoginDialog />}
               {isLoggedIn && <AppProfileMenu />}
+              {/* {isLoggedIn && <Button onClick={() => logout()}>O</Button>} */}
             </Box>
           </Box>
         </Toolbar>
@@ -156,43 +172,84 @@ const AppLoginDialog: FC<{}> = ({}) => {
 const AppProfileMenu: FC<{}> = ({}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  const {
+    session: {
+      info: { isLoggedIn, webId },
+      logout,
+    },
+  } = useSession();
+
+  // const menus = useMemo(
+  //   () =>
+  //     isLoggedIn
+  //       ? menuItems
+  //       : menuItems.filter((x) => x.isPrivateRoute !== true),
+  //   [isLoggedIn]
+  // );
   return (
     <Box display="flex" gap={1}>
-      <Box sx={{ flexGrow: 0 }}>
-        <Tooltip title="Open settings">
-          <IconButton
-            onClick={(event) => setAnchorEl(event.currentTarget)}
-            sx={{ p: 0 }}
-          >
-            <Avatar
-              alt="Remy Sharp"
-              // src="/static/images/avatar/2.jpg"
-            />
-          </IconButton>
-        </Tooltip>
-        <Menu
-          sx={{ mt: "45px" }}
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          open={Boolean(anchorEl)}
-          onClose={() => setAnchorEl(null)}
-        >
-          {settings.map((setting) => (
-            <MenuItem key={setting} onClick={() => setAnchorEl(null)}>
-              <Typography textAlign="center">{setting}</Typography>
-            </MenuItem>
-          ))}
-        </Menu>
-      </Box>
+      {webId && (
+        <CombinedDataProvider datasetUrl={webId} thingUrl={webId}>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton
+                onClick={(event) => setAnchorEl(event.currentTarget)}
+                sx={{ p: 0 }}
+              >
+                <Image
+                  property={VCARD.hasPhoto.iri.value}
+                  width={40}
+                  loadingComponent={() => <Avatar alt="Remy Sharp" />}
+                  errorComponent={() => <Avatar alt="Remy Sharp" />}
+                  style={{ borderRadius: "50%" }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorEl)}
+              onClose={() => setAnchorEl(null)}
+            >
+              <AppLink href={"/profile"}>
+                <MenuItem sx={{ display: "flex", gap: 1 }}>
+                  <PersonIcon />
+                  Profile
+                </MenuItem>
+              </AppLink>
+              {/* <AppLink href={"/profile"}>
+                <MenuItem>Profile</MenuItem>
+              </AppLink> */}
+              {/* {menuItems.map(({ title, url }) => (
+                <AppLink key={url} href={url}>
+                  <MenuItem>{title}</MenuItem>
+                </AppLink>
+              ))} */}
+              <MenuItem
+                onClick={() =>
+                  logout().then(() => {
+                    window.location.replace("/");
+                  })
+                }
+                sx={{ display: "flex", gap: 1 }}
+              >
+                <LogoutIcon sx={{ color: red[400] }} />
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
+            </Menu>
+          </Box>
+        </CombinedDataProvider>
+      )}
     </Box>
   );
 };

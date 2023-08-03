@@ -1,9 +1,9 @@
+import { Navigate } from "react-router-dom";
+
 function PageNotFound() {
     return (
-        <div>
-            <p>404 Page not found</p>
-        </div>
-    );
+        <Navigate to={"/"} />
+    )
 }
 
 export default PageNotFound

@@ -7,14 +7,22 @@ import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Box from "@mui/material/Box";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AppLink from "../AppLink/AppLink";
 import AppToggleColorMode from "./AppToggleColorMode";
+import PersonIcon from "@mui/icons-material/Person";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 type IProps = {};
 
 const AppFooter: FC<IProps> = ({}) => {
+  const navigate = useNavigate();
   return (
-    <AppBar position="static" variant="elevation" color="default" enableColorOnDark>
+    <AppBar
+      position="static"
+      variant="elevation"
+      color="default"
+      enableColorOnDark
+    >
       <AppToggleColorMode />
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -24,22 +32,27 @@ const AppFooter: FC<IProps> = ({}) => {
               bottom: 0,
               left: 0,
               right: 0,
-              display: { xs: "block", md: "none" },
+              display: { xs: "block", sm: "none", md: "none" },
             }}
             elevation={3}
           >
             <BottomNavigation showLabels>
-              <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
               <BottomNavigationAction
-                label="Favorites"
-                icon={<FavoriteIcon />}
+                onClick={() => navigate("/profile")}
+                label="Profile"
+                icon={<PersonIcon />}
               />
-              <BottomNavigationAction label="Archive" icon={<ArchiveIcon />} />
+              <BottomNavigationAction
+                disabled
+                onClick={() => navigate("/bookmarks")}
+                label="Bookmarks"
+                icon={<BookmarkIcon />}
+              />
             </BottomNavigation>
           </Paper>
           <Box
             sx={{
-              display: { xs: "none", md: "block" },
+              display: { xs: "none", sm: "block" },
               p: 3,
               flex: 1,
             }}
