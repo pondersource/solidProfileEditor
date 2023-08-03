@@ -163,7 +163,9 @@ const ContactTable: FC<IProps> = ({ edit, property }) => {
                 onChange={(e) => setNewContactType(e.target.value)}
               >
                 {contactTypes.map((x) => (
-                  <MenuItem value={x.value}>{x.label}</MenuItem>
+                  <MenuItem key={x.value} value={x.value}>
+                    {x.label}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>

@@ -15,15 +15,15 @@ import LoginCallBack from "./pages/LoginCallBack/LoginCallBack";
 
 function App() {
   const navigate = useNavigate();
-  onSessionRestore((url) => {
-    console.log(
-      "🚀 ~ file: App.tsx:42 ~ onSessionRestore ~ navigate:",
-      navigate
-    );
-    navigate(url);
-  });
-  // useEffect(() => {
-  // }, [navigate]);
+  useEffect(() => {
+    onSessionRestore((url) => {
+      console.log(
+        "🚀 ~ file: App.tsx:42 ~ onSessionRestore ~ navigate:",
+        navigate
+      );
+      navigate(url);
+    });
+  }, [navigate]);
   useEffect(() => {
     handleIncomingRedirect({
       restorePreviousSession: true,
