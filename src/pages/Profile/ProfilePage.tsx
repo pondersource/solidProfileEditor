@@ -31,10 +31,19 @@ const ProfilePage: FC<IProps> = ({}) => {
                   property={VCARD.hasPhoto.iri.value}
                   width={290}
                   loadingComponent={() => (
-                    <Skeleton variant="rectangular" width={280} height={280} />
+                    <Skeleton variant="rectangular" width={280} height={280}>
+                      Loading
+                    </Skeleton>
                   )}
+                  errorComponent={() => (
+                    <Skeleton variant="rectangular" width={280} height={280}>
+                      Error
+                    </Skeleton>
+                  )}
+                  // deleteComponent={}
                   style={{ borderRadius: 4 }}
                   edit={editing}
+                  autosave
                 />
 
                 <Divider />

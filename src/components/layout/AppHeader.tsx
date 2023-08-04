@@ -24,9 +24,10 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import React, { FC, useMemo, useState } from "react";
 import AppLink from "../AppLink/AppLink";
-import { menuItems } from "../constants/menuItems";
-import { OIDC_PROVIDERS } from "../constants/oidcProviders";
+import { menuItems } from "../../constants/menuItems";
+import { OIDC_PROVIDERS } from "../../constants/oidcProviders";
 import AppLogo from "./AppLogo";
+import { getPodUrlAll } from "@inrupt/solid-client";
 
 type IProps = {};
 
@@ -50,7 +51,7 @@ const AppHeader: FC<IProps> = ({}) => {
       variant="elevation"
       color="default"
       enableColorOnDark
-      sx={{borderRadius: 2, overflow: "hidden"}}
+      sx={{ borderRadius: 2, overflow: "hidden" }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -95,6 +96,8 @@ const AppHeader: FC<IProps> = ({}) => {
 };
 
 export default AppHeader;
+
+
 
 const AppLoginDialog: FC<{}> = ({}) => {
   const [open, setOpen] = React.useState(false);

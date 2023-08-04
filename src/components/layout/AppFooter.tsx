@@ -43,7 +43,6 @@ const AppFooter: FC<IProps> = ({}) => {
                 icon={<PersonIcon />}
               />
               <BottomNavigationAction
-                disabled
                 onClick={() => navigate("/bookmarks")}
                 label="Bookmarks"
                 icon={<BookmarkIcon />}

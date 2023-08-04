@@ -1,11 +1,27 @@
-import React, { FC } from 'react'
+import Bookmarks from "@/components/Bookmarks/Bookmarks";
+import { CombinedDataProvider, useSession } from "@inrupt/solid-ui-react";
+import { Box } from "@mui/material";
+import { FC } from "react";
 
-type IProps = {}
+type IProps = {};
 
-const BookmarksPage: FC<IProps> = ({}) => {
+
+
+const BookmarksPage: FC<IProps> = ({ }) => {
+  const { session } = useSession();
+  const { info: { webId } } = session;
+
+
   return (
-    <div>BookmarksPage</div>
-  )
-}
+    <Box>
+      {webId && (
+        <CombinedDataProvider datasetUrl={webId} thingUrl={webId}>
+          <Bookmarks />
+        </CombinedDataProvider>
+      )}
 
-export default BookmarksPage
+    </Box>
+  );
+};
+
+export default BookmarksPage;

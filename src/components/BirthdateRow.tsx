@@ -47,7 +47,7 @@ const BirthdateRow: FC<IBirthdateRow> = ({ edit }) => {
         dataType="datetime"
         inputProps={{ name: "birthdate-input", onChange: () => {} }}
         edit={edit}
-        errorComponent={() => <Typography color="error">Not Found</Typography>}
+        // errorComponent={() => <Typography color="error">Not Found</Typography>}
         autosave
       />
       {/* {birthdate && !edit && (
