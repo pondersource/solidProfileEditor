@@ -1,10 +1,12 @@
+import { VCARD } from "@inrupt/lit-generated-vocab-common";
 import {
   CombinedDataProvider,
   Image,
-  Text,
   useSession,
 } from "@inrupt/solid-ui-react";
-import { FormControl, InputLabel, Select, alpha } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import PersonIcon from "@mui/icons-material/Person";
+import { FormControl, InputLabel, Select } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -19,19 +21,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { red } from "@mui/material/colors";
 import React, { FC, useMemo, useState } from "react";
 import AppLink from "../AppLink/AppLink";
 import { menuItems } from "../constants/menuItems";
 import { OIDC_PROVIDERS } from "../constants/oidcProviders";
 import AppLogo from "./AppLogo";
-import { Group } from "@mui/icons-material";
-import { nameProps } from "../constants/nameProps";
-import { VCARD } from "@inrupt/lit-generated-vocab-common";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { red } from "@mui/material/colors";
-import PersonIcon from "@mui/icons-material/Person";
-
-const settings = ["Profile", "Logout"];
 
 type IProps = {};
 
@@ -42,19 +37,20 @@ const AppHeader: FC<IProps> = ({}) => {
     },
   } = useSession();
 
-  const menus = useMemo(
-    () =>
-      isLoggedIn
-        ? menuItems
-        : menuItems.filter((x) => x.isPrivateRoute !== true),
-    [isLoggedIn]
-  );
+  // const menus = useMemo(
+  //   () =>
+  //     isLoggedIn
+  //       ? menuItems
+  //       : menuItems.filter((x) => x.isPrivateRoute !== true),
+  //   [isLoggedIn]
+  // );
   return (
     <AppBar
       position="static"
       variant="elevation"
       color="default"
       enableColorOnDark
+      sx={{borderRadius: 2, overflow: "hidden"}}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>

@@ -29,16 +29,17 @@ const ProfilePage: FC<IProps> = ({}) => {
               <Box>
                 <Image
                   property={VCARD.hasPhoto.iri.value}
-                  width={280}
+                  width={290}
                   loadingComponent={() => (
                     <Skeleton variant="rectangular" width={280} height={280} />
                   )}
                   style={{ borderRadius: 4 }}
                   edit={editing}
                 />
+
                 <Divider />
 
-                <AppFlex>
+                <AppFlex sx={{ my: 2 }}>
                   <Typography sx={{ width: "120px" }}>Name</Typography>
                   <Text
                     property={FOAF.name.iri.value}
@@ -46,7 +47,7 @@ const ProfilePage: FC<IProps> = ({}) => {
                     autosave
                   />
                 </AppFlex>
-                <AppFlex>
+                <AppFlex sx={{ my: 2 }}>
                   <Typography sx={{ width: "120px" }}>organization</Typography>
                   <Text
                     property={VCARD.organization_name.iri.value}
@@ -55,7 +56,7 @@ const ProfilePage: FC<IProps> = ({}) => {
                   />
                 </AppFlex>
 
-                <AppFlex>
+                <AppFlex sx={{ my: 2 }}>
                   <Typography sx={{ width: "120px" }}>Born</Typography>
                   <BirthdateRow edit={editing} setEdit={setEditing} />
                 </AppFlex>

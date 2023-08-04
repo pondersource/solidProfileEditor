@@ -10,7 +10,9 @@ type Props = {};
 const AppLayout: FC<Props> = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <AppHeader />
+      <Box sx={{ m: 1, mb: 0 }}>
+        <AppHeader />
+      </Box>
       <Box
         boxShadow="inherit"
         flex={1}
@@ -27,7 +29,9 @@ const AppLayout: FC<Props> = () => {
       >
         <Outlet />
       </Box>
-      <AppFooter />
+      <Box >
+        <AppFooter />
+      </Box>
     </Box>
   );
 };
