@@ -1,7 +1,6 @@
+import { createTheme } from "@mui/material";
 import { useMemo } from "react";
 import { useColorMode } from "../atoms/colorMode.atom";
-import { createTheme } from "@mui/material";
-import { red } from '@mui/material/colors';
 
 // generate a black and white maerial ui theme palette 
 

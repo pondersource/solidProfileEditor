@@ -1,17 +1,13 @@
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import RestoreIcon from "@mui/icons-material/Restore";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import PersonIcon from "@mui/icons-material/Person";
 import { AppBar, Container, Paper, Toolbar, Typography } from "@mui/material";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Box from "@mui/material/Box";
 import { FC } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AppLink from "../AppLink/AppLink";
 import AppToggleColorMode from "./AppToggleColorMode";
-import PersonIcon from "@mui/icons-material/Person";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
 type IProps = {};
 
 const AppFooter: FC<IProps> = ({}) => {

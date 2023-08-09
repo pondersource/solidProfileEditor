@@ -9,7 +9,7 @@ import {
   useSession,
 } from "@inrupt/solid-ui-react";
 import EditIcon from "@mui/icons-material/Edit";
-import { Box, CircularProgress, Divider, IconButton, Skeleton, Typography, alpha } from "@mui/material";
+import { Box, Divider, IconButton, Skeleton, Typography, alpha } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { FC, useState } from "react";

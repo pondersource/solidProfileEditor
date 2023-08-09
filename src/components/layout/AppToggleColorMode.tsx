@@ -6,10 +6,10 @@ import * as React from "react";
 import { useColorMode } from "../../atoms/colorMode.atom";
 type IProps = {};
 
-const AppToggleColorMode: React.FC<IProps> = ({}) => {
+const AppToggleColorMode: React.FC<IProps> = ({ }) => {
   const theme = useTheme();
-  const { colorMode, setColorMode } = useColorMode();
-  const isDark = colorMode === "dark";
+  const { setColorMode } = useColorMode();
+  // const isDark = colorMode === "dark";
 
   return (
     <Fab

@@ -22,12 +22,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import React, { FC, useMemo, useState } from "react";
-import AppLink from "../AppLink/AppLink";
-import { menuItems } from "../../constants/menuItems";
+import React, { FC, useState } from "react";
 import { OIDC_PROVIDERS } from "../../constants/oidcProviders";
+import AppLink from "../AppLink/AppLink";
 import AppLogo from "./AppLogo";
-import { getPodUrlAll } from "@inrupt/solid-client";
 
 type IProps = {};
 
