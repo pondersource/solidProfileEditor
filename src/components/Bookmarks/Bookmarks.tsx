@@ -157,7 +157,7 @@ const DeleteBookmark = ({ deleteBookmark }: any) => {
     const { thing } = useThing();
     return (
         <IconButton onClick={() => deleteBookmark(thing)}>
-             <DeleteIcon />
+            <DeleteIcon />
         </IconButton>
     );
 };
