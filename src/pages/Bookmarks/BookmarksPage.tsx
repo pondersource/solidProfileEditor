@@ -1,4 +1,5 @@
 import Bookmarks from "@/components/Bookmarks/Bookmarks";
+import AppFlex from "@/components/Shared/AppFlex";
 import { CombinedDataProvider, useSession } from "@inrupt/solid-ui-react";
 import { Box } from "@mui/material";
 import { FC } from "react";
@@ -13,14 +14,14 @@ const BookmarksPage: FC<IProps> = ({ }) => {
 
 
   return (
-    <Box>
+    <AppFlex>
       {webId && (
         <CombinedDataProvider datasetUrl={webId} thingUrl={webId}>
           <Bookmarks />
         </CombinedDataProvider>
       )}
 
-    </Box>
+    </AppFlex>
   );
 };
 

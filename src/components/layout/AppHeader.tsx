@@ -166,10 +166,11 @@ const AppLoginDialog: FC<{}> = ({ }) => {
 const AppProfileMenu: FC<{}> = ({ }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const { session: { info: { webId }, logout } } = useSession();
+  const { session: { info: { webId }, logout, }, sessionRequestInProgress } = useSession();
 
   return (
     <Box display="flex" gap={1}>
+      {sessionRequestInProgress && "sessionRequestInProgress"}
       {webId && (
         <CombinedDataProvider datasetUrl={webId} thingUrl={webId}>
           <Box sx={{ flexGrow: 0 }}>

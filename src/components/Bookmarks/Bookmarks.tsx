@@ -16,15 +16,16 @@ import {
     getThingAll,
     getUrl,
     getUrlAll,
+    removeThing,
     saveSolidDatasetAt,
     setThing
 } from "@inrupt/solid-client";
 import { Session } from "@inrupt/solid-client-authn-browser";
-import { CombinedDataProvider, Table, TableColumn, useSession } from "@inrupt/solid-ui-react";
+import { CombinedDataProvider, Table, TableColumn, useSession, useThing } from "@inrupt/solid-ui-react";
 import { SCHEMA_INRUPT } from "@inrupt/vocab-common-rdf";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Card, CardContent, IconButton, Link, TextField } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 export async function getPodUrlAll(session: Session) {
@@ -88,6 +89,13 @@ const Bookmarks: FC<IProps> = ({ }) => {
     };
 
 
+    const deleteBookmark = async (todo: any) => {
+        const bookmarksUrl = getSourceUrl(bookmarks);
+        const updatedBookmarks = removeThing(bookmarks, todo);
+        const updatedDataset = await saveSolidDatasetAt(bookmarksUrl, updatedBookmarks, { fetch });
+        setBookmarks(updatedDataset);
+    };
+
     const bookmarkThings = (bookmarks && bookmarks?.graphs?.default) ? getThingAll(bookmarks) : [];
 
 
@@ -99,33 +107,43 @@ const Bookmarks: FC<IProps> = ({ }) => {
         <Box>
             {webId && (
                 <CombinedDataProvider datasetUrl={webId} thingUrl={webId}>
-                    <AppFlex sx={{ gap: 1 }}>
-                        <TextField
-                            onChange={(e) => setbookmarkTitle(e.target.value)}
-                            label="text"
-                            placeholder="text"
-                            size="small"
-                        />
-                        <TextField
-                            onChange={(e) => setbookmarkLink(e.target.value)}
-                            label="link"
-                            placeholder="link"
-                            size="small"
-                        />
-                        <Button variant="outlined" size="medium" onClick={handleSubmit}>Save</Button>
-                    </AppFlex >
-                    <Box>
-                        <Table className={`table`} things={thingsArray}>
-                            <TableColumn
-                                property={SCHEMA_INRUPT.text}
-                                header="text"
-                            />
-                            <TableColumn
-                                property={SCHEMA_INRUPT.URL}
-                                header="link"
-                            />
-                        </Table>
-                    </Box>
+                    <Card sx={{ maxWidth: 520, borderRadius: 2 }}>
+                        <CardContent>
+                            <AppFlex sx={{ gap: 1 }}>
+                                <TextField
+                                    onChange={(e) => setbookmarkTitle(e.target.value)}
+                                    label="text"
+                                    placeholder="text"
+                                    size="small"
+                                />
+                                <TextField
+                                    onChange={(e) => setbookmarkLink(e.target.value)}
+                                    label="link"
+                                    placeholder="link"
+                                    size="small"
+                                />
+                                <Button variant="outlined" size="medium" onClick={handleSubmit}>Save</Button>
+                            </AppFlex >
+                            <Box>
+                                <Table className={`table`} things={thingsArray}>
+                                    <TableColumn
+                                        property={SCHEMA_INRUPT.text}
+                                        header="text"
+                                    />
+                                    <TableColumn
+                                        property={SCHEMA_INRUPT.URL}
+                                        header="link"
+                                        body={({ value }: { value: string }) => <Link target="_blank" href={value}>{value}</Link>}
+                                    />
+                                    <TableColumn
+                                        property={SCHEMA_INRUPT.text}
+                                        header="Delete"
+                                        body={() => <DeleteBookmark deleteBookmark={deleteBookmark} />}
+                                    />
+                                </Table>
+                            </Box>
+                        </CardContent>
+                    </Card>
                 </CombinedDataProvider>
             )}
 
@@ -134,3 +152,12 @@ const Bookmarks: FC<IProps> = ({ }) => {
 };
 
 export default Bookmarks;
+
+const DeleteBookmark = ({ deleteBookmark }: any) => {
+    const { thing } = useThing();
+    return (
+        <IconButton onClick={() => deleteBookmark(thing)}>
+             <DeleteIcon />
+        </IconButton>
+    );
+};

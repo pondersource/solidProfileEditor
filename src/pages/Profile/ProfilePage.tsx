@@ -9,13 +9,13 @@ import {
   useSession,
 } from "@inrupt/solid-ui-react";
 import EditIcon from "@mui/icons-material/Edit";
-import { Box, Divider, IconButton, Skeleton, Typography } from "@mui/material";
+import { Box, CircularProgress, Divider, IconButton, Skeleton, Typography, alpha } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { FC, useState } from "react";
 type IProps = {};
 
-const ProfilePage: FC<IProps> = ({}) => {
+const ProfilePage: FC<IProps> = ({ }) => {
   const { session } = useSession();
   const { webId } = session.info;
   const [editing, setEditing] = useState(false);
@@ -32,13 +32,13 @@ const ProfilePage: FC<IProps> = ({}) => {
                   width={290}
                   loadingComponent={() => (
                     <Skeleton variant="rectangular" width={280} height={280}>
-                      Loading
+                      {/* <CircularProgress sx={{ zIndex: 222 }} /> */}
                     </Skeleton>
                   )}
                   errorComponent={() => (
-                    <Skeleton variant="rectangular" width={280} height={280}>
+                    <Box width={280} height={280} sx={{ display: "flex", justifyContent: "center", alignItems: "center", border: 1, borderColor: alpha("#000", 0.1) }}>
                       Error
-                    </Skeleton>
+                    </Box>
                   )}
                   // deleteComponent={}
                   style={{ borderRadius: 4 }}
