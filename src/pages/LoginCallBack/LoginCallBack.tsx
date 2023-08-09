@@ -11,7 +11,7 @@ const LoginCallBack: FC<{}> = ({}) => {
   } = useSession();
   const navigate = useNavigate();
   useEffect(() => {
-    isLoggedIn && navigate("/profile");
+    isLoggedIn && navigate("/");
   }, [isLoggedIn]);
 
   return (

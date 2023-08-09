@@ -31,7 +31,7 @@ import { getPodUrlAll } from "@inrupt/solid-client";
 
 type IProps = {};
 
-const AppHeader: FC<IProps> = ({}) => {
+const AppHeader: FC<IProps> = ({ }) => {
   const {
     session: {
       info: { isLoggedIn },
@@ -99,7 +99,7 @@ export default AppHeader;
 
 
 
-const AppLoginDialog: FC<{}> = ({}) => {
+const AppLoginDialog: FC<{}> = ({ }) => {
   const [open, setOpen] = React.useState(false);
   const [oidcIssuer, setOidcIssuer] = useState(() => OIDC_PROVIDERS[0].value);
   const {
@@ -142,8 +142,7 @@ const AppLoginDialog: FC<{}> = ({}) => {
               onClick={async () =>
                 await login({
                   oidcIssuer: oidcIssuer,
-                  // redirectUrl: window.location.origin,
-                  redirectUrl: window.location.origin + "/callback",
+                  redirectUrl: window.location.origin,
                   clientName: "Peditor",
                   // clientId
                   // clientSecret
@@ -159,32 +158,16 @@ const AppLoginDialog: FC<{}> = ({}) => {
             </Button>
           </Box>
         </DialogContent>
-        {/* <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
-        </DialogActions> */}
       </Dialog>
     </div>
   );
 };
 
-const AppProfileMenu: FC<{}> = ({}) => {
+const AppProfileMenu: FC<{}> = ({ }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const {
-    session: {
-      info: { isLoggedIn, webId },
-      logout,
-    },
-  } = useSession();
+  const { session: { info: { webId }, logout } } = useSession();
 
-  // const menus = useMemo(
-  //   () =>
-  //     isLoggedIn
-  //       ? menuItems
-  //       : menuItems.filter((x) => x.isPrivateRoute !== true),
-  //   [isLoggedIn]
-  // );
   return (
     <Box display="flex" gap={1}>
       {webId && (
