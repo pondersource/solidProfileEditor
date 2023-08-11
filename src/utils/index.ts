@@ -37,7 +37,6 @@ export const getBookmarksIndexUrl = async (session: Session) => {
 
 export const createBookmark = async (title: string, link: string, session: Session) => {
   const bookmarksIndexUrl = await getBookmarksIndexUrl(session);
-  alert("createBookmark");
   const bookmarksDataset = await getSolidDataset(bookmarksIndexUrl, { fetch: session.fetch });
   
   const bookmarkWithTitle = addStringNoLocale(createThing(), SCHEMA_INRUPT.text, title);
