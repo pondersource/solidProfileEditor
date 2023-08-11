@@ -4,17 +4,13 @@ import {
     BOOKMARK_CLASS,
     TYPE_PREDICATE
 } from "@/constants/predicates";
-import { getOrCreateBookmarks } from "@/utils";
+import { createBookmark, getOrCreateBookmarks } from "@/utils";
 import {
-    addStringNoLocale,
-    addUrl,
-    createThing,
     getSourceUrl,
     getThingAll,
     getUrl,
     removeThing,
-    saveSolidDatasetAt,
-    setThing
+    saveSolidDatasetAt
 } from "@inrupt/solid-client";
 import { CombinedDataProvider, Table, TableColumn, useSession, useThing } from "@inrupt/solid-ui-react";
 import { SCHEMA_INRUPT } from "@inrupt/vocab-common-rdf";
@@ -42,23 +38,9 @@ const Bookmarks: FC<IProps> = ({ }) => {
         if (session && isLoggedIn) initBookmarks()
     }, [session, isLoggedIn]);
 
-    const addBookmark = async (title: any, link: any, bookmarks: any) => {
-        // const bookmarksContainerUri = `${pod}bookmarks/`;
-        // const indexUrl = `${bookmarksContainerUri}index.ttl`;
-        const indexUrl = getSourceUrl(bookmarks);
-
-        const bookmarkWithTitle = addStringNoLocale(createThing(), SCHEMA_INRUPT.text, title);
-        const bookmarkWithLink = addStringNoLocale(bookmarkWithTitle, SCHEMA_INRUPT.URL, link);
-
-        const bookmarkWithType = addUrl(bookmarkWithLink, TYPE_PREDICATE, BOOKMARK_CLASS);
-
-        const updatedBookmarkList = setThing(bookmarks, bookmarkWithType);
-        const updatedDataset = await saveSolidDatasetAt(indexUrl, updatedBookmarkList, { fetch });
-        return updatedDataset
-    };
 
     const handleSubmit = async () => {
-        const updatedDataset = await addBookmark(bookmarkTitle, bookmarkLink, bookmarks);
+        const updatedDataset = await createBookmark(bookmarkTitle, bookmarkLink, session);
         setBookmarks(updatedDataset);
     };
 
@@ -71,7 +53,6 @@ const Bookmarks: FC<IProps> = ({ }) => {
     };
 
     const bookmarkThings = (bookmarks && bookmarks?.graphs?.default) ? getThingAll(bookmarks) : [];
-
 
     const thingsArray = bookmarkThings
         .filter((t) => getUrl(t, TYPE_PREDICATE) === BOOKMARK_CLASS)
