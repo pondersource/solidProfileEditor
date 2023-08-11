@@ -22,27 +22,20 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import React, { FC, useState } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { OIDC_PROVIDERS } from "../../constants/oidcProviders";
 import AppLink from "../AppLink/AppLink";
 import AppLogo from "./AppLogo";
+import { menuItems } from "@/constants/menuItems";
+import { Auth } from "@/utils/auth";
 
 type IProps = {};
 
 const AppHeader: FC<IProps> = ({ }) => {
-  const {
-    session: {
-      info: { isLoggedIn },
-    },
-  } = useSession();
+  const { session: { info: { isLoggedIn }, } } = useSession();
 
-  // const menus = useMemo(
-  //   () =>
-  //     isLoggedIn
-  //       ? menuItems
-  //       : menuItems.filter((x) => x.isPrivateRoute !== true),
-  //   [isLoggedIn]
-  // );
+  const menus = useMemo(() => isLoggedIn ? menuItems : menuItems.filter((x) => x.isPrivateRoute !== true), [isLoggedIn]);
+
   return (
     <AppBar
       position="static"
@@ -75,11 +68,11 @@ const AppHeader: FC<IProps> = ({ }) => {
               }}
               justifyContent="center"
             >
-              {/* {menus.map(({ title, url }) => (
+              {menus.map(({ title, url }) => (
                 <AppLink key={url} href={url}>
                   {title}
                 </AppLink>
-              ))} */}
+              ))}
             </Box>
             <Box flex={2} display="flex" justifyContent="flex-end">
               {!isLoggedIn && <AppLoginDialog />}
@@ -137,20 +130,7 @@ const AppLoginDialog: FC<{}> = ({ }) => {
             </FormControl>
             <Button
               variant="outlined"
-              onClick={async () =>
-                await login({
-                  oidcIssuer: oidcIssuer,
-                  redirectUrl: window.location.origin,
-                  clientName: "Peditor",
-                  // clientId
-                  // clientSecret
-                  //   handleRedirect(redirectUrl) {
-                  //     history.push("/todos");
-                  //   },
-                  // refreshToken
-                  // tokenType
-                })
-              }
+              onClick={async () => await Auth.login(oidcIssuer)}
             >
               Login
             </Button>

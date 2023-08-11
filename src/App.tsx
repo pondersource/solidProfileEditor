@@ -6,41 +6,30 @@ import HomePage from "./pages/Home/HomePage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 
 import {
-  handleIncomingRedirect,
-  onSessionRestore,
+  onSessionRestore
 } from "@inrupt/solid-client-authn-browser";
 import { useEffect } from "react";
 import { PrivateRoute } from "./components/PrivateRoute";
 import LoginCallBack from "./pages/LoginCallBack/LoginCallBack";
+import { Auth } from "./utils/auth";
 
 function App() {
   const navigate = useNavigate();
   useEffect(() => {
     onSessionRestore((url) => {
-      console.log(
-        "🚀 ~ file: App.tsx:42 ~ onSessionRestore ~ navigate:",
-        navigate
-      );
-      navigate(url);
+      // navigate(url, { replace: true });
     });
   }, [navigate]);
+
   useEffect(() => {
-    handleIncomingRedirect({
-      restorePreviousSession: true,
-    })
-      .then((info: any) => {
-        console.log("🚀 ~ file: App.tsx:50 ~ .then ~ info:", info);
-      })
-      .catch((error) => {
-        console.log("🚀 ~ file: App.tsx:54 ~ useEffect ~ error:", error);
-      });
+    Auth.completeLogin();
   }, []);
 
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route path="/" element={<HomePage />} />
         <Route path="/callback" element={<LoginCallBack />} />
+        <Route path="/" element={<HomePage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/bookmarks" element={<BookmarksPage />} />
           <Route path="/profile" element={<ProfilePage />} />
