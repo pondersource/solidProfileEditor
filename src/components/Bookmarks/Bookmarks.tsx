@@ -2,51 +2,27 @@ import { usebookmarks } from "@/atoms/bookmarks.atom";
 import AppFlex from "@/components/Shared/AppFlex";
 import {
     BOOKMARK_CLASS,
-    STORAGE_PREDICATE,
     TYPE_PREDICATE
 } from "@/constants/predicates";
+import { getOrCreateBookmarks } from "@/utils";
 import {
     addStringNoLocale,
     addUrl,
-    createSolidDataset,
     createThing,
-    getSolidDataset,
     getSourceUrl,
-    getThing,
     getThingAll,
     getUrl,
-    getUrlAll,
     removeThing,
     saveSolidDatasetAt,
     setThing
 } from "@inrupt/solid-client";
-import { Session } from "@inrupt/solid-client-authn-browser";
 import { CombinedDataProvider, Table, TableColumn, useSession, useThing } from "@inrupt/solid-ui-react";
 import { SCHEMA_INRUPT } from "@inrupt/vocab-common-rdf";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Button, Card, CardContent, IconButton, Link, TextField } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
 
 
-export async function getPodUrlAll(session: Session) {
-    const profileDataset = await getSolidDataset(session.info.webId!, { fetch: session.fetch });
-    const profileThing = getThing(profileDataset, session.info.webId!);
-    const podsUrls = getUrlAll(profileThing!, STORAGE_PREDICATE);
-    return podsUrls;
-}
-
-const getOrCreateBookmarks = async (containerUri: string, fetch: any) => {
-    const indexUrl = `${containerUri}index.ttl`;
-    try {
-        const list = await getSolidDataset(indexUrl, { fetch });
-        return list;
-    } catch (error: any) {
-        if (error.statusCode === 404) {
-            const list = saveSolidDatasetAt(indexUrl, createSolidDataset(), { fetch });
-            return list;
-        }
-    }
-};
 type IProps = {};
 
 const Bookmarks: FC<IProps> = ({ }) => {
@@ -57,15 +33,13 @@ const Bookmarks: FC<IProps> = ({ }) => {
     const [bookmarkLink, setbookmarkLink] = useState("");
     const { bookmarks, setBookmarks } = usebookmarks();
 
+    async function initBookmarks() {
+        const list = await getOrCreateBookmarks(session);
+        setBookmarks(list as any);
+    };
+
     useEffect(() => {
-        if (!session || !isLoggedIn || !webId) return;
-        (async () => {
-            const podsUrls = await getPodUrlAll(session);
-            const pod = podsUrls[0];
-            const containerUri = `${pod}bookmarks/`;
-            const list = await getOrCreateBookmarks(containerUri, session.fetch);
-            setBookmarks(list as any);
-        })();
+        if (session && isLoggedIn) initBookmarks()
     }, [session, isLoggedIn]);
 
     const addBookmark = async (title: any, link: any, bookmarks: any) => {
