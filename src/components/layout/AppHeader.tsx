@@ -1,3 +1,5 @@
+import { menuItems } from "@/constants/menuItems";
+import { Auth } from "@/utils/auth";
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
 import {
   CombinedDataProvider,
@@ -26,15 +28,23 @@ import React, { FC, useMemo, useState } from "react";
 import { OIDC_PROVIDERS } from "../../constants/oidcProviders";
 import AppLink from "../AppLink/AppLink";
 import AppLogo from "./AppLogo";
-import { menuItems } from "@/constants/menuItems";
-import { Auth } from "@/utils/auth";
 
 type IProps = {};
 
-const AppHeader: FC<IProps> = ({ }) => {
-  const { session: { info: { isLoggedIn }, } } = useSession();
+const AppHeader: FC<IProps> = ({}) => {
+  const {
+    session: {
+      info: { isLoggedIn },
+    },
+  } = useSession();
 
-  const menus = useMemo(() => isLoggedIn ? menuItems : menuItems.filter((x) => x.isPrivateRoute !== true), [isLoggedIn]);
+  const menus = useMemo(
+    () =>
+      isLoggedIn
+        ? menuItems
+        : menuItems.filter((x) => x.isPrivateRoute !== true),
+    [isLoggedIn]
+  );
 
   return (
     <AppBar
@@ -88,14 +98,9 @@ const AppHeader: FC<IProps> = ({ }) => {
 
 export default AppHeader;
 
-
-
-const AppLoginDialog: FC<{}> = ({ }) => {
+const AppLoginDialog: FC<{}> = ({}) => {
   const [open, setOpen] = React.useState(false);
   const [oidcIssuer, setOidcIssuer] = useState(() => OIDC_PROVIDERS[0].value);
-  const {
-    session: { login },
-  } = useSession();
 
   return (
     <div>
@@ -141,10 +146,16 @@ const AppLoginDialog: FC<{}> = ({ }) => {
   );
 };
 
-const AppProfileMenu: FC<{}> = ({ }) => {
+const AppProfileMenu: FC<{}> = ({}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const { session: { info: { webId }, logout, }, sessionRequestInProgress } = useSession();
+  const {
+    session: {
+      info: { webId },
+      logout,
+    },
+    sessionRequestInProgress,
+  } = useSession();
 
   return (
     <Box display="flex" gap={1}>
