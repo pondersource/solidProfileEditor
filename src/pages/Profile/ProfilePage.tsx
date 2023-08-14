@@ -1,7 +1,7 @@
 import BirthdateRow from "@/components/BirthdateRow";
 import ContactTable from "@/components/ContactTable";
 import AppFlex from "@/components/Shared/AppFlex";
-import { FOAF, VCARD } from "@inrupt/lit-generated-vocab-common";
+import { FOAF, VCARD } from "@inrupt/vocab-common-rdf";
 import {
   CombinedDataProvider,
   Image,
@@ -28,7 +28,7 @@ const ProfilePage: FC<IProps> = ({ }) => {
             <CardContent>
               <Box>
                 <Image
-                  property={VCARD.hasPhoto.iri.value}
+                  property={VCARD.hasPhoto}
                   width={290}
                   loadingComponent={() => (
                     <Skeleton variant="rectangular" width={280} height={280}>
@@ -40,7 +40,6 @@ const ProfilePage: FC<IProps> = ({ }) => {
                       Error
                     </Box>
                   )}
-                  // deleteComponent={}
                   style={{ borderRadius: 4 }}
                   edit={editing}
                   autosave
@@ -51,7 +50,7 @@ const ProfilePage: FC<IProps> = ({ }) => {
                 <AppFlex sx={{ my: 2 }}>
                   <Typography sx={{ width: "120px" }}>Name</Typography>
                   <Text
-                    property={FOAF.name.iri.value}
+                    property={FOAF.name}
                     edit={editing}
                     autosave
                   />
@@ -59,7 +58,7 @@ const ProfilePage: FC<IProps> = ({ }) => {
                 <AppFlex sx={{ my: 2 }}>
                   <Typography sx={{ width: "120px" }}>organization</Typography>
                   <Text
-                    property={VCARD.organization_name.iri.value}
+                    property={VCARD.organization_name}
                     edit={editing}
                     autosave
                   />
@@ -73,7 +72,7 @@ const ProfilePage: FC<IProps> = ({ }) => {
                 <Box>
                   <Typography>Email Addresses</Typography>
                   <ContactTable
-                    property={VCARD.hasEmail.value}
+                    property={VCARD.hasEmail}
                     edit={editing}
                   />
                 </Box>
@@ -82,7 +81,7 @@ const ProfilePage: FC<IProps> = ({ }) => {
                   <Typography>Phone Numbers</Typography>
 
                   <ContactTable
-                    property={VCARD.hasTelephone.value}
+                    property={VCARD.hasTelephone}
                     edit={editing}
                   />
                 </Box>

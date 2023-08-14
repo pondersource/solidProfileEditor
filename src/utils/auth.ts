@@ -3,14 +3,12 @@ import {
   login,
 } from "@inrupt/solid-client-authn-browser";
 
-// ...
-
 export async function completeLogin() {
   await handleIncomingRedirect({ restorePreviousSession: true });
 }
 
 export class Auth {
-//   private static callbackURL: string = "/callback";
+  //   private static callbackURL: string = "/callback";
   //   constructor() {}
 
   static async completeLogin() {

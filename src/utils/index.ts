@@ -1,19 +1,10 @@
-import { TYPE_PREDICATE, BOOKMARK_CLASS } from "@/constants/predicates";
 import { addStringNoLocale, addUrl, createSolidDataset, createThing, getPodUrlAll, getSolidDataset, saveSolidDatasetAt, setThing } from "@inrupt/solid-client";
 import { Session } from "@inrupt/solid-client-authn-browser";
-import { SCHEMA_INRUPT } from "@inrupt/vocab-common-rdf";
+import { BOOKMARK, DCTERMS, RDF } from "@inrupt/vocab-common-rdf";
 
 export async function getUserPodUrls(session: Session) {
   return await getPodUrlAll(session.info.webId!, { fetch: session.fetch });
 }
-
-// export async function getUserPodUrls(session: Session) {
-//   const profileDataset = await getSolidDataset(session.info.webId!, { fetch: session.fetch });
-//   const profileThing = getThing(profileDataset, session.info.webId!);
-//   const podsUrls = getUrlAll(profileThing!, STORAGE_PREDICATE);
-//   return podsUrls;
-// }
-
 
 export const getOrCreateBookmarks = async (session: Session) => {
   const indexUrl = await getBookmarksIndexUrl(session);
@@ -38,12 +29,12 @@ export const getBookmarksIndexUrl = async (session: Session) => {
 export const createBookmark = async (title: string, link: string, session: Session) => {
   const bookmarksIndexUrl = await getBookmarksIndexUrl(session);
   const bookmarksDataset = await getSolidDataset(bookmarksIndexUrl, { fetch: session.fetch });
-  
-  const bookmarkWithTitle = addStringNoLocale(createThing(), SCHEMA_INRUPT.text, title);
-  const bookmarkWithLink = addStringNoLocale(bookmarkWithTitle, SCHEMA_INRUPT.URL, link);
-  
-  const bookmarkWithType = addUrl(bookmarkWithLink, TYPE_PREDICATE, BOOKMARK_CLASS);
-  
+
+  const bookmarkWithTitle = addStringNoLocale(createThing(), DCTERMS.title, title);
+  const bookmarkWithLink = addStringNoLocale(bookmarkWithTitle, BOOKMARK.recalls, link);
+
+  const bookmarkWithType = addUrl(bookmarkWithLink, RDF.type, BOOKMARK.Bookmark);
+
   const updatedBookmarkList = setThing(bookmarksDataset, bookmarkWithType);
   const updatedDataset = await saveSolidDatasetAt(bookmarksIndexUrl, updatedBookmarkList, { fetch: session.fetch });
   return updatedDataset

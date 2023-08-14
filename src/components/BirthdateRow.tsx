@@ -1,21 +1,9 @@
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
-// import {
-//   getDatetime,
-//   getSourceUrl,
-//   removeDatetime,
-//   saveSolidDatasetAt,
-//   setThing,
-// } from "@inrupt/solid-client";
 import {
-  // DatasetContext,
   Value,
-  // useSession,
-  // useThing,
 } from "@inrupt/solid-ui-react";
-// import { Button, Typography } from "@mui/material";
 import {
   FC,
-  // useContext
 } from "react";
 
 type IBirthdateRow = {
@@ -46,7 +34,7 @@ const BirthdateRow: FC<IBirthdateRow> = ({ edit }) => {
   return (
     <span>
       <Value
-        property={VCARD.bday}
+        property={VCARD.bday.iri.value}
         dataType="datetime"
         inputProps={{ name: "birthdate-input", onChange: () => { } }}
         edit={edit}
