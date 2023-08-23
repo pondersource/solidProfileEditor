@@ -52,7 +52,7 @@ const AppHeader: FC<IProps> = ({}) => {
       variant="elevation"
       color="default"
       enableColorOnDark
-      sx={{ borderRadius: 2, overflow: "hidden" }}
+      // sx={{ borderRadius: 2, overflow: "hidden" }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -78,11 +78,6 @@ const AppHeader: FC<IProps> = ({}) => {
               }}
               justifyContent="center"
             >
-              {menus.map(({ title, url }) => (
-                <AppLink key={url} href={url}>
-                  {title}
-                </AppLink>
-              ))}
             </Box>
             <Box flex={2} display="flex" justifyContent="flex-end">
               {!isLoggedIn && <AppLoginDialog />}
@@ -195,18 +190,10 @@ const AppProfileMenu: FC<{}> = ({}) => {
             >
               <AppLink href={"/profile"}>
                 <MenuItem sx={{ display: "flex", gap: 1 }}>
-                  <PersonIcon />
-                  Profile
+                  {/* <PersonIcon /> */}
+                  <AppLink href={"/profiles"}>Profiles</AppLink>
                 </MenuItem>
               </AppLink>
-              {/* <AppLink href={"/profile"}>
-                <MenuItem>Profile</MenuItem>
-              </AppLink> */}
-              {/* {menuItems.map(({ title, url }) => (
-                <AppLink key={url} href={url}>
-                  <MenuItem>{title}</MenuItem>
-                </AppLink>
-              ))} */}
               <MenuItem
                 onClick={() =>
                   logout().then(() => {

@@ -1,16 +1,16 @@
+import { alpha } from "@mui/material";
 import Box from "@mui/material/Box";
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 import AppFooter from "./AppFooter";
 import AppHeader from "./AppHeader";
-import { alpha } from "@mui/material";
 
 type Props = {};
 
 const AppLayout: FC<Props> = () => {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <Box sx={{ m: 1, mb: 0 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" , py:1}}>
+      <Box sx={{ mx: 1, mb: 0, borderRadius: 2, overflow: "hidden" }}>
         <AppHeader />
       </Box>
       <Box
@@ -29,7 +29,7 @@ const AppLayout: FC<Props> = () => {
       >
         <Outlet />
       </Box>
-      <Box >
+      <Box sx={{ mx: 1, mb: 0, borderRadius: 2, overflow: "hidden" }}>
         <AppFooter />
       </Box>
     </Box>

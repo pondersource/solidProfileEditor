@@ -1,17 +1,12 @@
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import PersonIcon from "@mui/icons-material/Person";
-import { AppBar, Container, Paper, Toolbar, Typography } from "@mui/material";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import { AppBar, Container, Toolbar, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
 import AppLink from "../AppLink/AppLink";
 import AppToggleColorMode from "./AppToggleColorMode";
+
 type IProps = {};
 
 const AppFooter: FC<IProps> = ({}) => {
-  const navigate = useNavigate();
   return (
     <AppBar
       position="static"
@@ -22,32 +17,9 @@ const AppFooter: FC<IProps> = ({}) => {
       <AppToggleColorMode />
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Paper
-            sx={{
-              position: "fixed",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              display: { xs: "block", sm: "none", md: "none" },
-            }}
-            elevation={3}
-          >
-            <BottomNavigation showLabels>
-              <BottomNavigationAction
-                onClick={() => navigate("/profile")}
-                label="Profile"
-                icon={<PersonIcon />}
-              />
-              <BottomNavigationAction
-                onClick={() => navigate("/bookmarks")}
-                label="Bookmarks"
-                icon={<BookmarkIcon />}
-              />
-            </BottomNavigation>
-          </Paper>
+         
           <Box
             sx={{
-              display: { xs: "none", sm: "block" },
               p: 3,
               flex: 1,
             }}
