@@ -1,4 +1,3 @@
-import { menuItems } from "@/constants/menuItems";
 import { Auth } from "@/utils/auth";
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
 import {
@@ -24,7 +23,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useState } from "react";
 import { OIDC_PROVIDERS } from "../../constants/oidcProviders";
 import AppLink from "../AppLink/AppLink";
 import AppLogo from "./AppLogo";
@@ -38,13 +37,6 @@ const AppHeader: FC<IProps> = ({}) => {
     },
   } = useSession();
 
-  const menus = useMemo(
-    () =>
-      isLoggedIn
-        ? menuItems
-        : menuItems.filter((x) => x.isPrivateRoute !== true),
-    [isLoggedIn]
-  );
 
   return (
     <AppBar
@@ -190,8 +182,8 @@ const AppProfileMenu: FC<{}> = ({}) => {
             >
               <AppLink href={"/profile"}>
                 <MenuItem sx={{ display: "flex", gap: 1 }}>
-                  {/* <PersonIcon /> */}
-                  <AppLink href={"/profiles"}>Profiles</AppLink>
+                  <PersonIcon />
+                  <Typography textAlign="center">Profiles</Typography>
                 </MenuItem>
               </AppLink>
               <MenuItem
