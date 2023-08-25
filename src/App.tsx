@@ -15,7 +15,7 @@ function App() {
     Auth.completeLogin();
   }, []);
 
-  // 
+
   return (
     <Routes>
       <Route element={<AppLayout />}>
