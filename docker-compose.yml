@@ -2,8 +2,7 @@ version: '3.4'
 
 services:
   nginx:
-    container_name: nginx
-    # image: solidbookmarker
+    container_name: profile-nginx
     build:
       context: .
       dockerfile: ./Dockerfile
