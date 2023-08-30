@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  nginx:
+  profile-nginx:
     container_name: profile-nginx
     build:
       context: .
