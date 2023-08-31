@@ -1,16 +1,22 @@
-# build environment
-FROM node:lts-alpine as build
+FROM node:lts-alpine as builder
+
 WORKDIR /app
-# ENV PATH /app/node_modules/.bin:$PATH
-COPY ["package.json", "package-lock.json", "./"]
+
+COPY . .
+
 RUN npm install
-COPY . ./
+
 RUN npm run build
 
-# production environment
 FROM nginx:stable-alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-# new
-COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
+
+COPY --from=builder /app/dist /usr/share/nginx/html
+RUN ls -al
+
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY deploy/nginx/nginx.conf /etc/nginx/conf.d
+
+EXPOSE 8081
+
 CMD ["nginx", "-g", "daemon off;"]
