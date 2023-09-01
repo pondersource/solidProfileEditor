@@ -2,25 +2,24 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import AppLayout from "./components/layout/AppLayout";
 import PageNotFound from "./pages/404/PageNotFound";
 import HomePage from "./pages/Home/HomePage";
-import ProfilePage from "./pages/Profile/ProfilePage";
-
 import { useEffect } from "react";
 import { PrivateRoute } from "./components/PrivateRoute";
 import LoginCallBack from "./pages/LoginCallBack/LoginCallBack";
 import { Auth } from "./utils/auth";
 import { onSessionRestore } from "@inrupt/solid-client-authn-browser";
+import ProfilePage from "./pages/Profile/ProfilePage";
 
 function App() {
   const navigate = useNavigate()
-  
+
   useEffect(() => {
-    onSessionRestore((url) => {
-      console.log("onSessionRestore");
-      
-      navigate(url, { replace: true });
-    });
     Auth.completeLogin();
-  }, [navigate]);
+    onSessionRestore((currentUrl) => {
+      console.log("🚀 ~ file: App.tsx:17 ~ onSessionRestore ~ currentUrl:", currentUrl)
+      console.log("onSessionRestore");
+      navigate(currentUrl, { replace: true });
+    });
+  }, []);
 
   return (
     <Routes>

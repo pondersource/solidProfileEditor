@@ -7,9 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "preDeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -24,7 +22,6 @@
     "@mui/material": "^5.14.2",
     "@mui/styled-engine-sc": "^5.12.0",
     "@solid/lit-term": "^0.4.1",
-    "gh-pages": "^5.0.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
